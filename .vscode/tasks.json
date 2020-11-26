@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks":[
+
+        {
+            "label": "compile release",
+            "type":  "shell",
+            "command": [
+                "g++", "src/*.cpp",
+                "-c" , "-O3", 
+                "-I" , "include",
+            ]
+        },
+
+        {
+            "label":      "build release",
+            "type":       "shell",
+            "dependsOn": ["compile release"],
+            "command":    "g++ *.o -o bin/release/main"
+        },
+
+        {
+            "label":      "build and run release",
+            "type":       "shell",
+            "command":    "./bin/release/main",
+            "dependsOn": ["build release"]
+        },
+
+        {
+            "label":   "build debug",
+            "type":    "shell",
+            "command": [
+                "g++", "src/*.cpp",
+                "-g" , "-Wall",
+                "-I" , "include",
+                "-o" , "bin/debug/main",
+            ]
+        },
+
+        {
+            "label":   "build and run release",
+            "type":    "shell",
+            "command": "./bin/debug/main",
+            "dependsOn": ["build debug"],
+            "group": {
+                "kind":     "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
